@@ -26,6 +26,12 @@ public class UserRepository : IUserRepository
         return user;
     }
 
+    // public async Task<User> GetByUserName(string userName)
+    // {
+    //     var user = await _context.Users.Where(u => u.UserName.ToLower().Equals(userName)).FirstOrDefaultAsync();
+    //     return user;
+    // }
+
     public async Task Add(User user)
     {
         await _context.Users.AddAsync(user);

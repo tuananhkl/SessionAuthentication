@@ -15,7 +15,7 @@ public class User
     public string Password { get; set; } = null!;
 
     [Column(TypeName = "DateTime")]
-    
+    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime? DateOfBirth { get; set; }
     
     [Column(TypeName = "nvarchar(250)")]
