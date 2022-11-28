@@ -20,9 +20,10 @@ public class UserRepository : IUserRepository
         return users;
     }
 
-    public async Task<User> GetById(int id)
+    public async Task<User> GetById(int? id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(m => m.Id == id);
         return user;
     }
 
