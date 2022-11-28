@@ -9,9 +9,11 @@ public class User
     public int Id { get; set; }
 
     [Column(TypeName = "nvarchar(150)")]
+    [Required]
     public string UserName { get; set; } = null!;
 
     [Column(TypeName = "nvarchar(250)")] 
+    [Required]
     public string Password { get; set; } = null!;
 
     [Column(TypeName = "DateTime")]
@@ -19,12 +21,15 @@ public class User
     public DateTime? DateOfBirth { get; set; }
     
     [Column(TypeName = "nvarchar(250)")]
+    [Required]
     public string? Address { get; set; }
 
     [Column(TypeName = "nvarchar(250)")]
+    [Required]
     public string? Email { get; set; }
 
     public int? Age { get; set; }
+    [Required]
     public bool Gender { get; set; }
 
     // Id -> int
