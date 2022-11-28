@@ -23,10 +23,8 @@ namespace AuthenAuthor.Controllers
             {
                 return Problem("Can't find any users");
             }
-            else
-            {
-                return View(users.ToList());
-            }
+            
+            return View(users.ToList());
         }
 
         // GET: User/Details/5

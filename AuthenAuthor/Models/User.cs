@@ -10,13 +10,16 @@ public class User
 
     [Column(TypeName = "nvarchar(150)")]
     [Required]
+    [StringLength(250, ErrorMessage = "The {0} value cannot exceed {1} characters. ")]  
     public string UserName { get; set; } = null!;
 
     [Column(TypeName = "nvarchar(250)")] 
+    [StringLength(250, ErrorMessage = "The {0} value cannot exceed {1} characters. ")]  
     [Required]
     public string Password { get; set; } = null!;
 
     [Column(TypeName = "DateTime")]
+    [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime? DateOfBirth { get; set; }
     
@@ -26,8 +29,10 @@ public class User
 
     [Column(TypeName = "nvarchar(250)")]
     [Required]
+    [DataType(DataType.EmailAddress)]
     public string? Email { get; set; }
 
+    [Range(1, 120, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
     public int? Age { get; set; }
     [Required]
     public bool Gender { get; set; }
