@@ -48,6 +48,10 @@ namespace AuthenAuthor.Controllers
                 if (result == true)
                 {
                     var user = await _userRepository.GetByUserName(username);
+                    if (user is null)
+                    {
+                        return NotFound("User is not found");
+                    }
                     if (httpContext != null)
                     {
                         httpContext.Session.SetString("username", username);
