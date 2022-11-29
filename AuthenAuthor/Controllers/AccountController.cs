@@ -24,6 +24,12 @@ namespace AuthenAuthor.Controllers
 
         public IActionResult Index()
         {
+            var httpContext = _httpContextAccessor.HttpContext;
+            if(httpContext != null && httpContext.Session.GetString("username") is not null)
+            {
+                return RedirectToAction("Success");
+            }
+            
             return View();
         }
 
@@ -42,6 +48,11 @@ namespace AuthenAuthor.Controllers
         public async Task<IActionResult> Login(string username, string password)
         {
             var httpContext = _httpContextAccessor.HttpContext;
+            if(httpContext != null && httpContext.Session.GetString("username") is not null)
+            {
+                return RedirectToAction("Success");
+            }
+            
             if (username is not null && password is not null)
             {
                 var result = await _authManager.ValidateUser(username, password);
@@ -69,8 +80,8 @@ namespace AuthenAuthor.Controllers
                         {
                             httpContext.Session.SetString("gender", "Nu");
                         }
-                        
                     }
+                    
                     return View("Success");
                 }
                 else

@@ -9,15 +9,27 @@ namespace AuthenAuthor.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: User
         public async Task<IActionResult> Index()
         {
+            var httpContext = _httpContextAccessor.HttpContext;
+            if(httpContext != null && httpContext.Session.GetString("username") is null)
+            {
+                //ViewData["authError"] = "You didn't have permission. Please login";   
+                //TempData["authError"] = "You didn't have permission. Please <a asp-area=\"\" asp-controller=\"Account\" asp-action=\"Index\">Login</a>";
+                TempData["authError"] = "You didn't have permission. Please Login";
+                
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
+            }
+            
             var users = await _userRepository.GetAll();
             if (users is null)
             {
@@ -143,5 +155,14 @@ namespace AuthenAuthor.Controllers
             
             return RedirectToAction(nameof(Index));
         }
+
+        // private IActionResult AuthorizeBySession()
+        // {
+        //     var httpContext = _httpContextAccessor.HttpContext;
+        //     if(httpContext != null && httpContext.Session.GetString("username") is not null)
+        //     {
+        //         return RedirectToRoute(new { controller = "Home", action = "Index" });
+        //     }
+        // }
     }
 }
